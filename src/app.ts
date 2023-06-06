@@ -26,3 +26,5 @@ app.use((err:Error, req:Request, res:Response, next:NextFunction)=>{
 app.listen(port, ()=>{
     console.log(`Server started on http://localhost:${port}`);
 })
+
+export default app;
