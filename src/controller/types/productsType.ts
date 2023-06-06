@@ -1,3 +1,3 @@
-export class TodosType {
-    constructor(public title: string, public message: string){}
+export class ProductsType {
+    constructor(public title: string, public price: number, public status: boolean, public description:string){}
 }

@@ -1,22 +1,26 @@
 import { Router } from 'express'
 import { check } from 'express-validator'
 
-import { createTodo, getTodos, updateTodo, deleteTodo } from '../controller/todos'
+import { createProduct, getProducts, updateProduct, deleteProduct } from '../controller/products'
 
 const router = Router()
 
 router.post('/', [
-    check('title', 'title is required').not().isEmpty(),
-    check('message', 'message is required').not().isEmpty()  
-], createTodo)
+    check('title', 'title is required').not().isEmpty(), 
+    check('price', 'title is required').isNumeric(), 
+    check('description', 'title is required').not().isEmpty(), 
+    check('status', 'title is required').isBoolean(), 
+], createProduct)
 
-router.get('/', getTodos)
+router.get('/', getProducts)
 
 router.put('/:id',  [
-    check('title', 'title is required').not().isEmpty(),
-    check('message', 'message is required').not().isEmpty()  
-], updateTodo)
+    check('title', 'title is required').not().isEmpty(), 
+    check('price', 'title is required').isNumeric(), 
+    check('description', 'title is required').not().isEmpty(), 
+    check('status', 'title is required').isBoolean(), 
+], updateProduct)
 
-router.delete('/:id', deleteTodo)
+router.delete('/:id', deleteProduct)
 
 export default router

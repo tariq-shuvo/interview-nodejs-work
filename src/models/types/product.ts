@@ -1,10 +1,12 @@
 import { Document } from "mongoose"
 
-interface Todo {
+interface Product {
     title: string,
-    message: string
+    price: number,
+    status: boolean,
+    description?: string,
 }
 
-interface TodoDoc extends Document, Todo {}
+interface ProductDoc extends Document, Product {}
 
-export default TodoDoc
+export default ProductDoc
