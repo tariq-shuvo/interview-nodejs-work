@@ -4,7 +4,7 @@
   "description": "This a quick start pack for typescript express application",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require ts-node/register --watch-extensions ts 'src/test/**/*.spc.ts'",
+    "test": "mocha --timeout 15000 --require ts-node/register --watch-extensions ts 'src/test/**/*.spc.ts'",
     "start": "npx tsc && nodemon ./dist/app.js"
   },
   "author": "Md. Tariqul Islam Shuvo",

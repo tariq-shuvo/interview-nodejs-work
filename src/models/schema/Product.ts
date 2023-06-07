@@ -18,6 +18,14 @@ const productSchema: Schema = new Schema({
     description:{
         type: String
     },
+    create: {
+        type: Date,
+        default: Date.now()
+    },
+    update: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 const ProductModel = Mongoose.model<ProductDoc>('product', productSchema)

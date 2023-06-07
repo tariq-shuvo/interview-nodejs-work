@@ -32,6 +32,14 @@ const userSchema: Schema = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+    token: {
+        type: String,
+        default: null
+    },
+    create:{
+        type: Date,
+        default: Date.now()
     }
 })
 

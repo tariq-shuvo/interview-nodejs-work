@@ -21,11 +21,11 @@ export const registerUser:RequestHandler = async (req, res, next) => {
         })
     }
 
-    const username = (req.body as {username:string}).username
-    const first_name = (req.body as {first_name:string}).first_name
-    const last_name = (req.body as {last_name:string}).last_name
-    const email = (req.body as {email:string}).email
-    const address = (req.body as {address:string}).address
+    const username = (req.body as {username:string}).username.toLowerCase()
+    const first_name = (req.body as {first_name:string}).first_name.toLowerCase()
+    const last_name = (req.body as {last_name:string}).last_name.toLowerCase()
+    const email = (req.body as {email:string}).email.toLowerCase()
+    const address = (req.body as {address:string}).address.toLowerCase()
     const password = (req.body as {password:string}).password
 
     let userValidationInfo:UniqueUserCheckInfo | null;
@@ -134,11 +134,12 @@ export const loginUser:RequestHandler = async (req, res, next) => {
         }
 
         const token = jsonwebtoken.sign(userInfo, globalConfig.tokenJWTSecrect, { expiresIn: globalConfig.authTokenExpire});
-        const refreshToken = jsonwebtoken.sign(userInfo, globalConfig.tokenJWTSecrect, { expiresIn: globalConfig.authTokenExpire});
+        existingUser.token = token
+        await existingUser.save();
+            
         const response = {
             success: true,
-            token,
-            refreshToken
+            token
         }
         return res.status(201).json(response)
     } catch (error:any) {
@@ -147,28 +148,28 @@ export const loginUser:RequestHandler = async (req, res, next) => {
 }
 
 export const fetchUserInfo:RequestHandler = async (req:any, res, next) => {
-    return res.status(200).json(req.decoded)
+    return res.status(200).json({
+        success: true,
+        data: req.user
+    })
 }
 
 export const refreshTokenGenerate:RequestHandler = async (req:any, res, next) => {
-    const postData = req.body
-
-    if(postData.refreshToken) {
-        const user = req.decoded;
-        let userInfo = {
-            firstname: user.firstname,
-            lastname: user.lastname,
-            avatar: user.avatar,
-            email: user.email
-        }
-        const token = jsonwebtoken.sign(userInfo, globalConfig.tokenJWTSecrect, { expiresIn: globalConfig.authTokenExpire});
-
-        const response = {
-            "token": token,
-        }
-
-        res.status(200).json(response);        
-    } else {
-        res.status(404).send('Invalid request')
+    const user = req.user;
+    let userInfo = {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        avatar: user.avatar,
+        email: user.email
     }
+    const token = jsonwebtoken.sign(userInfo, globalConfig.tokenJWTSecrect, { expiresIn: globalConfig.authTokenExpire});
+
+    const response = {
+        "token": token,
+    }
+
+    res.status(200).json({
+        success: true,
+        ...response
+    }); 
 }

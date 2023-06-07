@@ -6,7 +6,8 @@ interface User {
     last_name: string,
     email: string,
     address: string,
-    password: string
+    password: string,
+    token?: string,
 }
 
 interface UserDoc extends Document, User {}

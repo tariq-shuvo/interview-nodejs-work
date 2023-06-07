@@ -7,12 +7,13 @@ import { authUser } from '../middleware/auth/user'
 const router = Router()
 
 router.post('/', [
-    check('username', 'username is required').not().isEmpty(),
+    check('username', 'username is required').not().isEmpty().custom(value => !/\s/.test(value)),
     check('first_name', 'first name is required').not().isEmpty(),  
     check('last_name', 'last name is required').not().isEmpty(),  
-    check('email', 'email is required').not().isEmpty(),  
+    check('email', 'email is required').isEmail(),  
     check('address', 'address is required').not().isEmpty(),  
-    check('password', 'password is required').not().isEmpty(),  
+    check('password', 'password is required').isLength({min: 8}),  
+    check('confirm_password', 'password confirmation do not match').custom((value, {req}) => value == req.body.password)  
 ], registerUser)
 
 router.post('/auth', [
@@ -22,6 +23,6 @@ router.post('/auth', [
 
 router.get('/auth', authUser, fetchUserInfo)
 
-router.post('/auth/refresh', authUser, refreshTokenGenerate)
+router.get('/auth/refresh', authUser, refreshTokenGenerate)
 
 export default router

@@ -44,6 +44,20 @@ export const getProducts:RequestHandler = async (req, res, next) => {
     })
 }
 
+export const getProductInfo:RequestHandler<{id: string}> = async (req, res, next) => {
+    const id = req.params.id
+    let product:object|null
+
+    try {
+        product = await ProductModel.findById(id)
+    } catch (error:any) {
+        throw new Error(error)
+    }
+    return res.status(200).json({
+        data: product
+    })
+}
+
 export const updateProduct:RequestHandler<{id: string}> = async (req, res, next) => {
     const error = validationResult(req)
 
@@ -54,10 +68,10 @@ export const updateProduct:RequestHandler<{id: string}> = async (req, res, next)
     }
 
     const id = req.params.id
-    const title = (req.body as {title:string}).title
+    const title = (req.body as {title:string}).title.toLowerCase()
     const price = (req.body as {price:number}).price
     const status = (req.body as {status:boolean}).status
-    const description = (req.body as {description:string}).description
+    const description = (req.body as {description:string}).description.toLowerCase()
 
     let productInfo: ProductDoc | null
 
@@ -79,10 +93,20 @@ export const updateProduct:RequestHandler<{id: string}> = async (req, res, next)
         productInfo.price = price
         productInfo.status = status
         productInfo.description = description
+        // @ts-ignore
+        productInfo.update = Date.now();
 
         await productInfo.save()
     } catch (error:any) {
-        throw new Error(error)
+        // throw new Error(error)
+        return res.status(400).json({
+            errors: {
+                value: id,
+                msg: "could not find product",
+                param: "id",
+                location: "params"
+            }
+        })
     }
 
     return res.status(201).json({
@@ -112,10 +136,18 @@ export const deleteProduct:RequestHandler<{id: string}> = async (req, res, next)
 
         await productInfo.delete()
     } catch (error:any) {
-        throw new Error(error)
+        // throw new Error(error)
+        return res.status(400).json({
+            errors: {
+                value: id,
+                msg: "could not find product",
+                param: "id",
+                location: "params"
+            }
+        })
     }
 
-    return res.status(201).json({
+    return res.status(204).json({
         message: 'product is deleted successfully.',
         data: productInfo
     })
