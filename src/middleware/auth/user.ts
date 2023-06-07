@@ -17,7 +17,7 @@ export const authUser:RequestHandler = (req:any, res, next) => {
   try {
     const decode:any = jsonwebtoken.verify(token, globalConfig.tokenJWTSecrect)
 
-    req.user = decode.user
+    req.user = decode
 
     next()
   } catch (err) {

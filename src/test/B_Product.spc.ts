@@ -4,6 +4,7 @@ import chaiHttp from 'chai-http';
 import app from '../app';
 
 import ProductModel from '../models/schema/Product';
+import UserModel from '../models/schema/User';
 
 chai.use(chaiHttp);
 
@@ -30,7 +31,12 @@ describe('Automated Testing Of Product Operations', () => {
         .post('/product')
         .set('content-type', 'application/json')
         .set('x-auth-token', token)
-        .send({title: "Product Title", price: "20ajkskajska", status: "Foster", description: "this is a product details"})
+        .send({
+          title: "Product Title", 
+          price: "20ajkskajska", 
+          status: "Foster", 
+          description: "this is a product details"
+        })
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.errors[0].param).to.equal('price');
@@ -46,7 +52,12 @@ describe('Automated Testing Of Product Operations', () => {
         .post('/product')
         .set('content-type', 'application/json')
         .set('x-auth-token', token)
-        .send({title: "Product Title", price: 200, status: true, description: "this is a product details"})
+        .send({
+          title: "Product Title", 
+          price: 200, 
+          status: true, 
+          description: "this is a product details"
+        })
         .end((err, res) => {
           expect(res.status).to.equal(201);
           //@ts-ignore
@@ -82,7 +93,12 @@ describe('Automated Testing Of Product Operations', () => {
         .put(`/product/${product_id}`)
         .set('content-type', 'application/json')
         .set('x-auth-token', token)
-        .send({title: "Product Title", price: 250, status: true, description: "this is a product details"})
+        .send({
+          title: "Product Title", 
+          price: 250, 
+          status: true, 
+          description: "this is a product details"
+        })
         .end((err, res) => {
           expect(res.status).to.equal(201);
           done();
@@ -145,6 +161,7 @@ describe('Automated Testing Of Product Operations', () => {
         expect(res.status).to.equal(400);
         expect(res.body.errors.param).to.equal('id');
         await ProductModel.deleteMany({});
+        await UserModel.deleteMany({$or:[{username: "jhonfoster"}, {email: "test@gmail.com"}]});
         done();
       });
     })

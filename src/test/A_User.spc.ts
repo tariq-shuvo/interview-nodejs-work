@@ -3,8 +3,6 @@ import { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 
-import UserModel from '../models/schema/User';
-
 chai.use(chaiHttp);
 
 describe('Automated Testing Of User Operations', () => {
@@ -24,7 +22,15 @@ describe('Automated Testing Of User Operations', () => {
         chai.request(app)
         .post('/user')
         .set('content-type', 'application/json')
-        .send({username: "jhon foster", first_name: "Jhon", last_name: "Foster", email: "test", address: "test address", password: "pas", confirm_password: "passw"})
+        .send({
+          username: "jhon foster", 
+          first_name: "Jhon", 
+          last_name: "Foster", 
+          email: "test", 
+          address: "test address", 
+          password: "pas", 
+          confirm_password: "passw"
+        })
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.errors[0].param).to.equal('username');
@@ -39,7 +45,15 @@ describe('Automated Testing Of User Operations', () => {
       chai.request(app)
       .post('/user')
       .set('content-type', 'application/json')
-      .send({username: "jhonfoster", first_name: "Jhon", last_name: "Foster", email: "test@gmail.com", address: "test address", password: "password100!@", confirm_password: "password100!@"})
+      .send({
+        username: "jhonfoster", 
+        first_name: "Jhon", 
+        last_name: "Foster", 
+        email: "test@gmail.com", 
+        address: "test address", 
+        password: "password100!@", 
+        confirm_password: "password100!@"
+      })
       .end(async (err, res) => {
         expect(res.status).to.equal(201);
         done();
@@ -62,7 +76,10 @@ describe('Automated Testing Of User Operations', () => {
       chai.request(app)
       .post('/user/auth')
       .set('content-type', 'application/json')
-      .send({username: "testuser1", password: "123456"})
+      .send({
+        username: "testuser1", 
+        password: "123456"
+      })
       .end(async(err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
@@ -74,7 +91,10 @@ describe('Automated Testing Of User Operations', () => {
       chai.request(app)
       .post('/user/auth')
       .set('content-type', 'application/json')
-      .send({username: "jhonfoster", password: "password100!@"})
+      .send({
+        username: "jhonfoster", 
+        password: "password100!@"
+      })
       .end(async(err, res) => {
         expect(res.body.success).to.equal(true);
         // @ts-ignore
@@ -115,7 +135,6 @@ describe('Automated Testing Of User Operations', () => {
         .set('x-auth-token', token)
         .end(async(err, res) => {
           expect(res.body.success).to.equal(true);
-          // await UserModel.deleteMany({$or:[{username: "jhonfoster"}, {email: "test@gmail.com"}]});
           done();
         });
     })
