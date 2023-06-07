@@ -170,11 +170,14 @@ export const deleteProductBatch:RequestHandler = async (req, res, next) => {
         await ProductModel.deleteMany({
             $or:productBatchIds
         });
+        products = await ProductModel.find({});
     } catch (error:any) {
         throw new Error(error)
     }
 
     return res.status(200).json({
-        message: 'product batch is deleted successfully.'
+        success: true,
+        message: 'product batch is deleted successfully.',
+        data: products 
     })
 }
