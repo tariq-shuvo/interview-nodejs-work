@@ -1,5 +1,5 @@
-import Mongoose, { Schema } from "mongoose"
-import UserDoc from "../types/user"
+import Mongoose, { Schema } from "mongoose";
+import UserDoc from "../types/user";
 
 const userSchema: Schema = new Schema({
     username:{
@@ -43,6 +43,6 @@ const userSchema: Schema = new Schema({
     }
 })
 
-const UserModel = Mongoose.model<UserDoc>('user', userSchema)
+const UserModel = Mongoose.model<UserDoc>('user', userSchema);
 
-export default UserModel
+export default UserModel;

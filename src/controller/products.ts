@@ -1,11 +1,11 @@
-import { RequestHandler } from 'express'
-import { validationResult } from 'express-validator'
-import ProductModel from '../models/schema/Product'
-import ProductDoc from '../models/types/product'
-import { ProductsType } from './types/productsType'
+import { RequestHandler } from 'express';
+import { validationResult } from 'express-validator';
+import ProductModel from '../models/schema/Product';
+import ProductDoc from '../models/types/product';
+import { ProductsType } from './types/productsType';
 
 export const createProduct:RequestHandler = async (req, res, next) => {
-    const error = validationResult(req)
+    const error = validationResult(req);
 
     if (!error.isEmpty()) {
         return res.status(400).json({
@@ -13,16 +13,16 @@ export const createProduct:RequestHandler = async (req, res, next) => {
         })
     }
 
-    const title = (req.body as {title:string}).title
-    const price = (req.body as {price:number}).price
-    const status = (req.body as {status:boolean}).status
-    const description = (req.body as {description:string}).description
-    let newProduct: ProductDoc
+    const title = (req.body as {title:string}).title;
+    const price = (req.body as {price:number}).price;
+    const status = (req.body as {status:boolean}).status;
+    const description = (req.body as {description:string}).description;
+    let newProduct: ProductDoc;
 
     try {
-        newProduct = await ProductModel.create(new ProductsType(title, price, status, description))
+        newProduct = await ProductModel.create(new ProductsType(title, price, status, description));
     } catch (error:any) {
-        throw new Error(error)
+        throw new Error(error);
     }
 
     return res.status(201).json({
@@ -32,12 +32,12 @@ export const createProduct:RequestHandler = async (req, res, next) => {
 }
 
 export const getProducts:RequestHandler = async (req, res, next) => {
-    let products:object[]
+    let products:object[];
 
     try {
-        products = await ProductModel.find({})
+        products = await ProductModel.find({});
     } catch (error:any) {
-        throw new Error(error)
+        throw new Error(error);
     }
     return res.status(200).json({
         data: products
@@ -45,13 +45,13 @@ export const getProducts:RequestHandler = async (req, res, next) => {
 }
 
 export const getProductInfo:RequestHandler<{id: string}> = async (req, res, next) => {
-    const id = req.params.id
-    let product:object|null
+    const id = req.params.id;
+    let product:object|null;
 
     try {
-        product = await ProductModel.findById(id)
+        product = await ProductModel.findById(id);
     } catch (error:any) {
-        throw new Error(error)
+        throw new Error(error);
     }
     return res.status(200).json({
         data: product
@@ -59,7 +59,7 @@ export const getProductInfo:RequestHandler<{id: string}> = async (req, res, next
 }
 
 export const updateProduct:RequestHandler<{id: string}> = async (req, res, next) => {
-    const error = validationResult(req)
+    const error = validationResult(req);
 
     if (!error.isEmpty()) {
         return res.status(400).json({
@@ -67,16 +67,16 @@ export const updateProduct:RequestHandler<{id: string}> = async (req, res, next)
         })
     }
 
-    const id = req.params.id
-    const title = (req.body as {title:string}).title.toLowerCase()
-    const price = (req.body as {price:number}).price
-    const status = (req.body as {status:boolean}).status
-    const description = (req.body as {description:string}).description.toLowerCase()
+    const id = req.params.id;
+    const title = (req.body as {title:string}).title.toLowerCase();
+    const price = (req.body as {price:number}).price;
+    const status = (req.body as {status:boolean}).status;
+    const description = (req.body as {description:string}).description.toLowerCase();
 
-    let productInfo: ProductDoc | null
+    let productInfo: ProductDoc | null;
 
     try {
-        productInfo = await ProductModel.findById(id)
+        productInfo = await ProductModel.findById(id);
 
         if(!productInfo){
             return res.status(400).json({
@@ -89,14 +89,14 @@ export const updateProduct:RequestHandler<{id: string}> = async (req, res, next)
             })
         }
 
-        productInfo.title = title
-        productInfo.price = price
-        productInfo.status = status
-        productInfo.description = description
+        productInfo.title = title;
+        productInfo.price = price;
+        productInfo.status = status;
+        productInfo.description = description;
         // @ts-ignore
         productInfo.update = Date.now();
 
-        await productInfo.save()
+        await productInfo.save();
     } catch (error:any) {
         // throw new Error(error)
         return res.status(400).json({
@@ -116,12 +116,12 @@ export const updateProduct:RequestHandler<{id: string}> = async (req, res, next)
 }
 
 export const deleteProduct:RequestHandler<{id: string}> = async (req, res, next) => {
-    const id = req.params.id
+    const id = req.params.id;
 
-    let productInfo: ProductDoc | null
+    let productInfo: ProductDoc | null;
 
     try {
-        productInfo = await ProductModel.findById(id)
+        productInfo = await ProductModel.findById(id);
 
         if(!productInfo){
             return res.status(400).json({

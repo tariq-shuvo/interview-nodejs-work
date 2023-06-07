@@ -1,4 +1,4 @@
-import { Document } from "mongoose"
+import { Document } from "mongoose";
 
 interface User {
     username: string,
@@ -8,8 +8,8 @@ interface User {
     address: string,
     password: string,
     token?: string,
-}
+};
 
-interface UserDoc extends Document, User {}
+interface UserDoc extends Document, User {};
 
-export default UserDoc
+export default UserDoc;

@@ -1,10 +1,10 @@
-import { Router } from 'express'
-import { check } from 'express-validator'
+import { Router } from 'express';
+import { check } from 'express-validator';
 
-import { registerUser, loginUser, fetchUserInfo, refreshTokenGenerate, logoutUser } from '../controller/users'
-import { authUser } from '../middleware/auth/user'
+import { registerUser, loginUser, fetchUserInfo, refreshTokenGenerate, logoutUser } from '../controller/users';
+import { authUser } from '../middleware/auth/user';
 
-const router = Router()
+const router = Router();
 
 router.post('/', [
     check('username', 'username is required').not().isEmpty().custom(value => !/\s/.test(value)),
@@ -14,17 +14,17 @@ router.post('/', [
     check('address', 'address is required').not().isEmpty(),  
     check('password', 'password is required').isLength({min: 8}),  
     check('confirm_password', 'password confirmation do not match').custom((value, {req}) => value == req.body.password)  
-], registerUser)
+], registerUser);
 
 router.post('/auth', [
     check('username', 'username is required').not().isEmpty(), 
     check('password', 'password is required').not().isEmpty(),  
-], loginUser)
+], loginUser);
 
-router.get('/auth', authUser, fetchUserInfo)
+router.get('/auth', authUser, fetchUserInfo);
 
-router.get('/auth/refresh', authUser, refreshTokenGenerate)
+router.get('/auth/refresh', authUser, refreshTokenGenerate);
 
-router.get('/auth/logout', authUser, logoutUser)
+router.get('/auth/logout', authUser, logoutUser);
 
-export default router
+export default router;

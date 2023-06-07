@@ -5,7 +5,7 @@ import UserModel from '../../models/schema/User';
 
 export const authUser:RequestHandler = async(req:any, res, next) => {
     // Receive token as header
-  const token = req.header('x-auth-token')
+  const token = req.header('x-auth-token');
 
   // Check exist token or not
   if (!token) {
@@ -28,9 +28,9 @@ export const authUser:RequestHandler = async(req:any, res, next) => {
 
   // Check  the authorization
   try {
-    const decode:any = jsonwebtoken.verify(token, globalConfig.tokenJWTSecrect)
-    req.user = userInfo
-    next()
+    const decode:any = jsonwebtoken.verify(token, globalConfig.tokenJWTSecrect);
+    req.user = userInfo;
+    next();
   } catch (err) {
     userInfo.token = null;
     await userInfo.save();

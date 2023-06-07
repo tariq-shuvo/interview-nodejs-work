@@ -1,5 +1,5 @@
-import Mongoose, { Schema } from "mongoose"
-import ProductDoc from "../types/product"
+import Mongoose, { Schema } from "mongoose";
+import ProductDoc from "../types/product";
 
 const productSchema: Schema = new Schema({
     title:{
@@ -28,6 +28,6 @@ const productSchema: Schema = new Schema({
     }
 })
 
-const ProductModel = Mongoose.model<ProductDoc>('product', productSchema)
+const ProductModel = Mongoose.model<ProductDoc>('product', productSchema);
 
-export default ProductModel
+export default ProductModel;

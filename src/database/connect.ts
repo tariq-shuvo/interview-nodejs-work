@@ -1,10 +1,10 @@
-import Mongoose from 'mongoose'
-import globalConfig from '../config/global.config'
+import Mongoose from 'mongoose';
+import globalConfig from '../config/global.config';
 
-let database: Mongoose.Connection
+let database: Mongoose.Connection;
 
 export const connect = async () => {
-    const uri = globalConfig.databaseConnectionString
+    const uri = globalConfig.databaseConnectionString;
 
     try {
         await Mongoose.connect(uri, {
@@ -12,13 +12,13 @@ export const connect = async () => {
             useFindAndModify: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
-        })
-        database = Mongoose.connection
+        });
+        database = Mongoose.connection;
         console.log("Connected to database");
     } catch (error:any) {
-        console.error(error.message)
+        console.error(error.message);
         // Exit process with failure
-        process.exit(1)
+        process.exit(1);
     }
 }
 
@@ -26,5 +26,5 @@ export const disconnect = () => {
     if (!database) {
       return
     }
-    Mongoose.disconnect()
+    Mongoose.disconnect();
 }

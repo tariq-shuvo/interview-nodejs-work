@@ -1,29 +1,29 @@
-import { Router } from 'express'
-import { check } from 'express-validator'
+import { Router } from 'express';
+import { check } from 'express-validator';
 
-import { createProduct, getProducts, updateProduct, deleteProduct, getProductInfo } from '../controller/products'
-import { authUser } from '../middleware/auth/user'
+import { createProduct, getProducts, updateProduct, deleteProduct, getProductInfo } from '../controller/products';
+import { authUser } from '../middleware/auth/user';
 
-const router = Router()
+const router = Router();
 
 router.post('/', [
     check('title', 'title is required').not().isEmpty(), 
     check('price', 'title is required').isNumeric(), 
     check('description', 'title is required').not().isEmpty(), 
     check('status', 'title is required').isBoolean(), 
-], authUser, createProduct)
+], authUser, createProduct);
 
-router.get('/', authUser, getProducts)
+router.get('/', authUser, getProducts);
 
-router.get('/:id', authUser, getProductInfo)
+router.get('/:id', authUser, getProductInfo);
 
 router.put('/:id',  [
     check('title', 'title is required').not().isEmpty(), 
     check('price', 'title is required').isNumeric(), 
     check('description', 'title is required').not().isEmpty(), 
     check('status', 'title is required').isBoolean(), 
-], authUser, updateProduct)
+], authUser, updateProduct);
 
-router.delete('/:id', authUser, deleteProduct)
+router.delete('/:id', authUser, deleteProduct);
 
-export default router
+export default router;
