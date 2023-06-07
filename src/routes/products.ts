@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { createProduct, getProducts, updateProduct, deleteProduct, getProductInfo } from '../controller/products';
+import { createProduct, getProducts, updateProduct, deleteProduct, getProductInfo, deleteProductBatch } from '../controller/products';
 import { authUser } from '../middleware/auth/user';
 
 const router = Router();
@@ -25,5 +25,7 @@ router.put('/:id',  [
 ], authUser, updateProduct);
 
 router.delete('/:id', authUser, deleteProduct);
+
+router.post('/batch', authUser, deleteProductBatch);
 
 export default router;
