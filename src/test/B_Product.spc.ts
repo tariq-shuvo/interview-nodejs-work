@@ -17,7 +17,7 @@ describe('Automated Testing Of Product Operations', () => {
         .set('content-type', 'application/json')
         .set('x-auth-token', token)
         .send({})
-        .end((err, res) => {
+        .end(async (err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.errors.length).to.equal(4);
           done();
@@ -160,6 +160,20 @@ describe('Automated Testing Of Product Operations', () => {
       .end(async(err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.errors.param).to.equal('id');
+        done();
+      });
+    })
+
+    it('(Logout User) Logout User (GET) :/user/auth/logout', (done)=>{
+      // @ts-ignore
+      let token = global.token;
+      chai.request(app)
+      .get(`/user/auth/logout`)
+      .set('content-type', 'application/json')
+      .set('x-auth-token', token)
+      .end(async(err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.success).to.equal(true);
         await ProductModel.deleteMany({});
         await UserModel.deleteMany({$or:[{username: "jhonfoster"}, {email: "test@gmail.com"}]});
         done();

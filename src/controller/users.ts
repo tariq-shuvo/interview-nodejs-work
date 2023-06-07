@@ -127,8 +127,8 @@ export const loginUser:RequestHandler = async (req, res, next) => {
 
         let userInfo = {
             username: existingUser.username,
-            firstname: existingUser.first_name,
-            lastname: existingUser.last_name,
+            first_name: existingUser.first_name,
+            last_name: existingUser.last_name,
             address: existingUser.address,
             email: existingUser.email
         }
@@ -157,8 +157,8 @@ export const fetchUserInfo:RequestHandler = async (req:any, res, next) => {
 export const refreshTokenGenerate:RequestHandler = async (req:any, res, next) => {
     const user = req.user;
     let userInfo = {
-        firstname: user.firstname,
-        lastname: user.lastname,
+        firstname: user.first_name,
+        lastname: user.last_name,
         avatar: user.avatar,
         email: user.email
     }
@@ -166,10 +166,27 @@ export const refreshTokenGenerate:RequestHandler = async (req:any, res, next) =>
 
     const response = {
         "token": token,
-    }
+    };
+
+    const updateUserToken:any = await UserModel.findById(user._id);
+    updateUserToken.token = token;
+    await updateUserToken.save();
 
     res.status(200).json({
         success: true,
         ...response
+    }); 
+}
+
+export const logoutUser:RequestHandler = async (req:any, res, next) => {
+    const user = req.user;
+
+    const updateUserToken:any = await UserModel.findById(user._id);
+    updateUserToken.token = null;
+    await updateUserToken.save();
+
+    res.status(200).json({
+        success: true,
+        data: user
     }); 
 }

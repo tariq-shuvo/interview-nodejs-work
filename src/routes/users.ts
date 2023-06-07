@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { check } from 'express-validator'
 
-import { registerUser, loginUser, fetchUserInfo, refreshTokenGenerate } from '../controller/users'
+import { registerUser, loginUser, fetchUserInfo, refreshTokenGenerate, logoutUser } from '../controller/users'
 import { authUser } from '../middleware/auth/user'
 
 const router = Router()
@@ -24,5 +24,7 @@ router.post('/auth', [
 router.get('/auth', authUser, fetchUserInfo)
 
 router.get('/auth/refresh', authUser, refreshTokenGenerate)
+
+router.get('/auth/logout', authUser, logoutUser)
 
 export default router
