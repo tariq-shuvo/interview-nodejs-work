@@ -7,7 +7,7 @@ import { connect } from './database/connect';
 import productRoutes from './routes/products';
 import userRoutes from './routes/users';
 
-const port = 3000;
+const port = 5000;
 const app = express();
 
 connect();
