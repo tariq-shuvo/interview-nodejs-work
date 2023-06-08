@@ -49,7 +49,7 @@ describe('Automated Testing Of User Operations', () => {
         username: "jhonfoster", 
         first_name: "Jhon", 
         last_name: "Foster", 
-        email: "test@gmail.com", 
+        email: "jhonfoster@gmail.com", 
         address: "test address", 
         password: "password100!@", 
         confirm_password: "password100!@"
