@@ -14,7 +14,7 @@ export const authUser:RequestHandler = async(req:any, res, next) => {
     })
   }
 
-  const userInfo:any = await UserModel.findOne({token}).select("-pasword -token -create");
+  const userInfo:any = await UserModel.findOne({token}).select("-password -token -create");
 
   if(!userInfo){
     return res.status(401).json({

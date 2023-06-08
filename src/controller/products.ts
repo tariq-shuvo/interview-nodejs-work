@@ -26,6 +26,7 @@ export const createProduct:RequestHandler = async (req, res, next) => {
     }
 
     return res.status(201).json({
+        success: true,
         message: 'product is created.',
         data: newProduct
     })
@@ -110,6 +111,7 @@ export const updateProduct:RequestHandler<{id: string}> = async (req, res, next)
     }
 
     return res.status(201).json({
+        success: true,
         message: 'product is updated successfully.',
         data: productInfo
     })
@@ -148,6 +150,7 @@ export const deleteProduct:RequestHandler<{id: string}> = async (req, res, next)
     }
 
     return res.status(204).json({
+        success: true,
         message: 'product is deleted successfully.',
         data: productInfo
     })

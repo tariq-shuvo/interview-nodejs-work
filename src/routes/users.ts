@@ -7,7 +7,7 @@ import { authUser } from '../middleware/auth/user';
 const router = Router();
 
 router.post('/', [
-    check('username', 'username is required').not().isEmpty().custom(value => !/\s/.test(value)),
+    check('username', 'empty space is not allowed into username').not().isEmpty().custom(value => !/\s/.test(value)),
     check('first_name', 'first name is required').not().isEmpty(),  
     check('last_name', 'last name is required').not().isEmpty(),  
     check('email', 'email is required').isEmail(),  

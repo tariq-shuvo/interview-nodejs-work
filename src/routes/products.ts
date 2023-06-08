@@ -8,14 +8,14 @@ const router = Router();
 
 router.post('/', [
     check('title', 'title is required').not().isEmpty(), 
-    check('price', 'title is required').isNumeric(), 
-    check('description', 'title is required').not().isEmpty(), 
-    check('status', 'title is required').isBoolean(), 
-], authUser, createProduct);
+    check('price', 'price is required').isNumeric(), 
+    check('status', 'status is required').isBoolean(),
+    check('description', 'description is required').not().isEmpty(),  
+], createProduct);
 
-router.get('/', authUser, getProducts);
+router.get('/', getProducts);
 
-router.get('/:id', authUser, getProductInfo);
+router.get('/:id', getProductInfo);
 
 router.put('/:id',  [
     check('title', 'title is required').not().isEmpty(), 

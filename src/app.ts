@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 
 import { json } from 'body-parser';
 
+import cors from 'cors';
+
 import { connect } from './database/connect';
 
 import productRoutes from './routes/products';
@@ -11,6 +13,8 @@ const port = 5000;
 const app = express();
 
 connect();
+
+app.use(cors());
 
 app.use(json());
 
