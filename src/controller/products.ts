@@ -151,7 +151,7 @@ export const deleteProduct:RequestHandler<{id: string}> = async (req, res, next)
 
     return res.status(204).json({
         success: true,
-        message: 'product is deleted successfully.',
+        message: 'product is deleted successfully',
         data: productInfo
     })
 }
@@ -180,7 +180,7 @@ export const deleteProductBatch:RequestHandler = async (req, res, next) => {
 
     return res.status(200).json({
         success: true,
-        message: 'product batch is deleted successfully.',
+        message: 'product batch is deleted successfully',
         data: products 
     })
 }

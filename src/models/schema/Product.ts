@@ -11,7 +11,7 @@ const productSchema: Schema = new Schema({
         type: Number,
         required: true,
     },
-    satus:{
+    status:{
         type: Boolean,
         default: true,
     },
