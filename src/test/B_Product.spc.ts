@@ -143,7 +143,7 @@ describe('Automated Testing Of Product Operations', () => {
       .set('content-type', 'application/json')
       .set('x-auth-token', token)
       .end((err, res) => {
-        expect(res.status).to.equal(204);
+        expect(res.status).to.equal(200);
         done();
       });
     })
